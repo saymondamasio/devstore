@@ -1,3 +1,4 @@
+import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -5,11 +6,17 @@ import { api } from '~/data/api'
 import { type Product } from '~/data/types/product'
 
 async function getFeaturedProducts(): Promise<Product[]> {
-	const response = await api('/products/featured')
-
-	const products = await response.json()
+	const products = await api<Product[]>('/products/featured', {
+		next: {
+			revalidate: 60 * 60 // 1 hour
+		}
+	})
 
 	return products
+}
+
+export const metadata: Metadata = {
+	title: 'Home'
 }
 
 export default async function Home() {
@@ -31,7 +38,7 @@ export default async function Home() {
 				/>
 
 				<div className="absolute bottom-28 right-28 flex h-12 max-w-[280px] items-center gap-2 rounded-full border-2 border-zinc-500 bg-black/60 p-1 pl-5">
-					<span className="truncate text-sm">${highlightProduct.title}</span>
+					<span className="truncate text-sm">{highlightProduct.title}</span>
 					<span className="flex h-full items-center justify-center rounded-full bg-violet-500 px-4 font-semibold">
 						{highlightProduct.price.toLocaleString('pt-BR', {
 							style: 'currency',
@@ -46,7 +53,7 @@ export default async function Home() {
 			{otherProducts.map(product => (
 				<Link
 					key={product.id}
-					href={`/product/${product.slug}`}
+					href={`/products/${product.slug}`}
 					className="group relative col-span-3 row-span-3 flex justify-center overflow-hidden rounded-lg bg-zinc-900"
 				>
 					<Image
