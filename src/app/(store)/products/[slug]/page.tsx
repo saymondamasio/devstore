@@ -29,11 +29,12 @@ export async function generateMetadata({ params }: ProductProps): Promise<Metada
 	}
 }
 
-export async function generateStaticParams(): Promise<Array<ProductProps['params']>> {
-	const products = await api<Product[]>('/products/featured')
+// gerar paginas estaticas na build
+// export async function generateStaticParams(): Promise<Array<ProductProps['params']>> {
+// 	const products = await api<Product[]>('/products/featured')
 
-	return products.map(product => ({ slug: product.slug }))
-}
+// 	return products.map(product => ({ slug: product.slug }))
+// }
 
 export default async function ProductPage({ params }: ProductProps) {
 	const product = await getProduct(params.slug)

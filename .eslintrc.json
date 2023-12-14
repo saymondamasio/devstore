@@ -1,6 +1,7 @@
 {
   "extends":["next/core-web-vitals", "@saymondamasio/eslint-config/next"],
   "rules": {
-    "@typescript-eslint/strict-boolean-expressions": "off"
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-namespace": "off"
   }
 }
