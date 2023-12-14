@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { ImageResponse } from 'next/og'
 import colors from 'tailwindcss/colors'
 
